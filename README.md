@@ -1,1 +1,1 @@
-"# MageHost" 
+# MageHost
