@@ -28,6 +28,14 @@ export default function InsetList(props) {
   const [Items, setItems] = useState([]);
 
   useEffect(() => {
+    if (localStorage.getItem('UserName') == ''){
+      const { history } = props;
+      history.push('/login');
+    }
+    if (localStorage.getItem('UserName') == null ){
+      const { history } = props;
+      history.push('/login');
+    }
     fetch("https://hn.algolia.com/api/v1/search?page=" + activePage + "&query=" + SearchInput)
     .then(res => res.json())
     .then(
