@@ -1,17 +1,18 @@
 import React from 'react';
-// eslint-disable-next-line
-import logo from './logo.svg';
+import { Switch, Route  } from "react-router-dom";
 import './App.css';
-import Header from './Header'
-// import Button from '@material-ui/core/Button'
 import SignIn from './SignIn'
+import Home from './Home'
 
 function App() {
+
   return (
     <div className="App">
-      <Header UserName="Whatever" />
       <header className="App-header">
-        <SignIn />
+        <Switch>
+        <Route path="/login" component={SignIn} />
+        <Route path="/" component={Home} />
+        </Switch>
       </header>
     </div>
   );

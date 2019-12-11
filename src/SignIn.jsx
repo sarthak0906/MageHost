@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,34 +13,65 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
-    container: {
-        backgroundColor: 'white',
-        position: 'absolute',
-        top: '15vh',
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
-    },
-    RememberMe: {
-        color: '#444',
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
+  container: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: '15vh',
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  RememberMe: {
+    color: '#444',
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
-export default function SignIn() {
+
+export default function SignIn(props) {
+  
+  const [Username, setUsername] = useState(
+    localStorage.getItem('UserName') || ''
+  );
+  const [Password, setPassword] = useState(
+    localStorage.getItem('Pass') || ''
+  );
+  const [RememberMe, setRememberMe] = useState(true);
+
+  const Login = (e) => {
+    if (Username == ''){
+      alert("email cannot be empty");
+      return;
+    }
+    if (Password == ''){
+      alert("Password cannot be empty");
+      return;
+    }
+    else {
+      const { history } = props;
+
+
+      localStorage.setItem('UserName', Username);
+      if(!RememberMe == true){
+        localStorage.setItem('Pass', Password);
+      }
+
+      history.push('/');
+    }
+  }
   const classes = useStyles();
 
   return (
@@ -59,10 +90,12 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="Username"
+            label="Username"
+            name="Username"
+            autoComplete="Username"
+            value={Username}
+            onChange={(e) => setUsername(e.target.value)}
             autoFocus
           />
           <TextField
@@ -74,18 +107,20 @@ export default function SignIn() {
             label="Password"
             type="password"
             id="password"
+            value={Password}
+            onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
           />
           <FormControlLabel 
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value={RememberMe} onChange={(e) => setRememberMe(!RememberMe)} color="primary" />}
             label={<Typography className={classes.RememberMe}>Remember me</Typography>}
           />
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={Login}
           >
             Sign In
           </Button>

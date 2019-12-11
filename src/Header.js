@@ -10,6 +10,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
+        background: '#ff742b',
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
+        backgroundColor: fade(theme.palette.common.white, 1),
         '&:hover': {
         backgroundColor: fade(theme.palette.common.white, 0.25),
         },
@@ -43,6 +44,19 @@ const useStyles = makeStyles(theme => ({
         width: '80%',
         },
     },
+    inputRoot: {
+      display: 'flex',
+      color: 'inherit',
+      '&:hover': {
+        backgroundColor: 'white',
+      },
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 7),
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      color: '#000',
+    },
     searchIcon: {
         width: theme.spacing(7),
         height: '100%',
@@ -50,22 +64,11 @@ const useStyles = makeStyles(theme => ({
         pointerEvents: 'none',
         display: 'flex',
         alignItems: 'center',
+        color: '#ff742b',
         justifyContent: 'center',
-    },
-    inputRoot: {
-        display: 'flex',
-        color: 'inherit',
-    },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 7),
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-        width: 120,
-        '&:focus': {
-            width: 200,
-        },
-        },
+        '&:hover': {
+          color: '#ff742b',
+        }
     },
 }));
 
@@ -74,22 +77,24 @@ export default function Header(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: "#ff742b"}}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             {props.UserName}
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
+              <SearchIcon style={{color: '#ff742b'}} />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Search stories by title, url or author"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              value={props.SearchInput}
+              onChange={props.OnChange}
             />
           </div>
           <Typography className={classes.settings} variant="h6" noWrap>
